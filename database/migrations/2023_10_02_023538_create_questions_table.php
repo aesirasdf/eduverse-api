@@ -11,15 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('questions', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique();
-            $table->string('email')->unique();
-            $table->string('password');
-            $table->unsignedBigInteger("subscription_id");
+            $table->string("topic");
+            $table->string("question");
+            $table->decimal("point",8,2);
+            $table->unsignedBigInteger("course_id");
             $table->timestamps();
 
-            $table->foreign("subscription_id")->references("id")->on("subscriptions")->onDelete("cascade");
+            $table->foreign("course_id")->references("id")->on("courses")->onDelete("cascade");
+
         });
     }
 
@@ -28,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('questions');
     }
 };
